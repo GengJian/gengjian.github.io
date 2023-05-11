@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"gengjian.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="惯例吹水众所周知CocoaPods，已经成为iOS&#x2F;Mac OS程序员离不开的三方库管理工具。 除了我们引用一些知名的大佬框架以外，有时候我们也想分享一下自己的小轮子，或者托管自己的私有框架，尤其是组件化需要，想要上传属于自己的CocoaPods怎么办呢？ 查阅了官方文档和一些前辈们的blog，感觉并不难，为了便于理解每一步命令的作用，决定还是需要自己手撸一遍。 什么是CocoaPods">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cocoapods私有库托管">
+<meta property="og:url" content="https://gengjian.github.io/2022/02/01/iOS-CocoaPods%E5%BA%93%E6%90%AD%E5%BB%BA%E5%8F%8A%E6%89%98%E7%AE%A1%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="GengJian&#39;s Blog">
+<meta property="og:description" content="惯例吹水众所周知CocoaPods，已经成为iOS&#x2F;Mac OS程序员离不开的三方库管理工具。 除了我们引用一些知名的大佬框架以外，有时候我们也想分享一下自己的小轮子，或者托管自己的私有框架，尤其是组件化需要，想要上传属于自己的CocoaPods怎么办呢？ 查阅了官方文档和一些前辈们的blog，感觉并不难，为了便于理解每一步命令的作用，决定还是需要自己手撸一遍。 什么是CocoaPods">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-aac4236d6207ebdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-f5856ed04e85b92f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-9d7bf60ec3af3a8e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-5718cdeb26a01ad8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-2496697312a5081c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-b3974529a39d8928.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-4f8583344e025329.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-097421c3e950217e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-174af21d6edeca61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-efb057c84225a617.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-7927f80fb24e4a77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-f3e74c1c662e0eab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-ab1c0d9ac31ccd97.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-54ae6482350aefb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-b180bd95e038232d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-c3f18da69ae0de45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-e8d3d73b38eedb68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/708960-8bff14fdb8dd32d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2022-02-01T02:30:00.000Z">
+<meta property="article:modified_time" content="2023-05-11T10:41:40.193Z">
+<meta property="article:author" content="soulstayreal@gmail.com">
+<meta property="article:tag" content="Terminal">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/708960-aac4236d6207ebdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="canonical" href="https://gengjian.github.io/2022/02/01/iOS-CocoaPods%E5%BA%93%E6%90%AD%E5%BB%BA%E5%8F%8A%E6%89%98%E7%AE%A1%E5%AE%9E%E8%B7%B5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Cocoapods私有库托管 | GengJian's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">GengJian's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个靠写代码养家糊口的脱口秀演员</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://gengjian.github.io/2022/02/01/iOS-CocoaPods%E5%BA%93%E6%90%AD%E5%BB%BA%E5%8F%8A%E6%89%98%E7%AE%A1%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="soulstayreal@gmail.com">
+      <meta itemprop="description" content="梦里不知天在水，满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GengJian's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Cocoapods私有库托管
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-01 10:30:00" itemprop="dateCreated datePublished" datetime="2022-02-01T10:30:00+08:00">2022-02-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 18:41:40" itemprop="dateModified" datetime="2023-05-11T18:41:40+08:00">2023-05-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="惯例吹水"><a href="#惯例吹水" class="headerlink" title="惯例吹水"></a>惯例吹水</h2><p>众所周知CocoaPods，已经成为iOS&#x2F;Mac OS程序员离不开的三方库管理工具。</p>
+<p>除了我们引用一些知名的大佬框架以外，有时候我们也想分享一下自己的小轮子，或者托管自己的私有框架，尤其是组件化需要，想要上传属于自己的CocoaPods怎么办呢？</p>
+<p>查阅了官方文档和一些前辈们的blog，感觉并不难，为了便于理解每一步命令的作用，决定还是需要自己手撸一遍。</p>
+<h3 id="什么是CocoaPods"><a href="#什么是CocoaPods" class="headerlink" title="什么是CocoaPods"></a>什么是CocoaPods</h3><p>Define once, update easily。看到宣传标语就感觉很easy。CocoaPods是OS X和iOS下的一个第三类库管理工具，通过PodFile文件我们可以为项目添加被称为“Pods”的依赖库（这些类库必须是CocoaPods本身所支持的），并且可以轻松管理其版本。</p>
+<h3 id="怎么安装CocoaPods"><a href="#怎么安装CocoaPods" class="headerlink" title="怎么安装CocoaPods"></a>怎么安装CocoaPods</h3><p>官方app下载地址</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://cocoapods.org/app">https://CocoaPods.org/app</a></p>
+</blockquote>
+<p>民间小白鼠🐁教程</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e85e71ed64e6">https://www.jianshu.com/p/e85e71ed64e6</a></p>
+</blockquote>
+<p><em><strong>涉及到的一些概念</strong></em></p>
+<p><strong>Podfile</strong>：  该文件为配置引用三方库文件，指定引用的库以及版本。</p>
+<p><strong>Podfile.lock:</strong>  cocoapods根据本地podfile和远端仓库生成版本管理文件，便于用户协作。</p>
+<p><strong>.xcodeproj:</strong>  iOS项目工程目录，本质是个文件夹，可用Xcode打开。</p>
+<p><strong>.xcworkspace：</strong>工作空间，联合多个项目工程，pod install后自动生成。</p>
+<p><strong>.podspec :</strong>  该文件为你的代码仓库索引描述文件，<strong>CocoaPods</strong>通过该文件对你真正存储代码工程的 Git 仓库进行索引与下载</p>
+<p><em><strong>本博客演示所用文件</strong></em></p>
+<p><strong>SoulToolsLibrary:</strong>  托管我们的实现代码（根据公有私有选择是否公开），需要remote对应远程Git仓库</p>
+<p><strong>SoulPrivatePodspec:</strong>  托管我们生成的Podspec文件（私有Pod才用），私有库隐藏了源码则需要公开本仓库</p>
+<p><strong>SoulTestDemo:</strong>  模拟三方用户新建工程测试我们的Pod，不需要远程仓库，如果你非要建，就当我没说</p>
+<p>以上文件目录，均放在**~&#x2F;MyPodLibrary**目录里了，方便演示</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-aac4236d6207ebdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920110426392.png"></p>
+<h2 id="上传一个公有Pod"><a href="#上传一个公有Pod" class="headerlink" title="上传一个公有Pod"></a>上传一个公有Pod</h2><hr>
+<p>官方文档如下</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://guides.cocoapods.org/making/index.html">https://guides.CocoaPods.org/making/index.html</a></p>
+</blockquote>
+<ol>
+<li><p>搜索有没有同名库</p>
+<p> (因为最后一步CocoaPods会校验同名的库只有原作者才能上传)</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-f5856ed04e85b92f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180919205834417.png"></p>
+</li>
+<li><p>创建远程仓库</p>
+</li>
+</ol>
+<p>我这里采用的gitee.com。其实和github.com是一样的，不过github只能建一个私有仓库不够用，所以就用码云了。</p>
+<p>a.首先必须创建<strong>SoulToolsLibrary</strong>，这个仓库用来保存我们的轮子源码。<br>  开源的话记得选开源许可证，我就直接MIT了；不开源的话，需要创建<strong>SoulPrivatePodspec</strong>仓库。这里不需要添加**.Readme**初始化，因为后边pods会自动帮我们添加Readme模板。</p>
+<p> <img src="https://upload-images.jianshu.io/upload_images/708960-9d7bf60ec3af3a8e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Gitee"></p>
+<p>创建完成后无需Clone到本地目录，等下把CocoaPods自动生成的同名目录Remote过来就好了。后面我直接用SourceTree了，方便演示，当然也可以用命令行。<br> <em>(本模块演示公有Pod，可以直接跳转到步骤c，私有的需要b的，下个模块单独解释。)</em></p>
+<p>b.其次私有库的话需要创建<strong>SoulPrivatePodspec</strong>，这个仓库用来储存各个版本的**.podspec索引文件**。<br>直接开源就好，不然别人pod install的时候，还要获取你这个git权限。<br>创建完成后Clone到本地目录，我这里直接用SourceTree了，方便演示，当然也可以用命令行。</p>
+<p>c.最后我们本地再建一个目录<strong>SoulTestDemo</strong>，用来模拟第三方用户工程测试我们pod能不能用，这个就留在本地就好了，不用同步到远端了。</p>
+<p>最后目录如下图<br><img src="https://upload-images.jianshu.io/upload_images/708960-5718cdeb26a01ad8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="演示文件目录.png"></p>
+<ol start="3">
+<li>本地新建工程<br><img src="https://upload-images.jianshu.io/upload_images/708960-2496697312a5081c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="本地新建测试工程.png"></li>
+</ol>
+<p>我们现在需要通过github的模板生成自己的Pod库开发环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/*进入本地目录*/</span><br><span class="line">cd ~/Users/mac/MyPodLibrary/SoulToolsLibrary</span><br><span class="line"></span><br><span class="line">/*创建我们的pod库开发环境*/</span><br><span class="line">pod lib create SoulToolsLibrary</span><br><span class="line"></span><br><span class="line">/*配置开发环境*/</span><br><span class="line">直接回车就是带下划线的默认值，具体配置如下附图</span><br><span class="line"></span><br><span class="line">/*说明*/</span><br><span class="line">配置完成后 会自动创建并打开Workspace</span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">附图：![image-20180920115446795.png](https://upload-images.jianshu.io/upload_images/708960-e71248424c34d839.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>   &#x2F;&#x2F;platform 发布平台<br>    iOS<br>    &#x2F;&#x2F;language 开发使用的语言<br>    ObjC<br>    &#x2F;&#x2F;demo 是否包含演示程序;有两个用途:1.编写框架的时候可以用来测试,2.支持pod try MyLib(SoulToolsLibrary)<br>    Yes<br>    &#x2F;&#x2F;testing frameworks 使用什么测试框架;<br>    None<br>    &#x2F;&#x2F;view base testing 是否使用基于视图的测试;亲测选择yes的话，将自动导入FBSnapShotTestCase，这个框架只支持swift3.0，要求Xcode8一下…<br>    NO<br>    &#x2F;&#x2F;class prefix 类名前缀;建议两位大写英文字母<br>    ST<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4. 编写Library以及Demo</span><br><span class="line"></span><br><span class="line">![编写Library以及Demo.png](https://upload-images.jianshu.io/upload_images/708960-4a992a7ae22eb609.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">  a.在上述自动打开的workspace，我们可以看到就说熟悉的pod install之后生成xworkspace是一样的，唯一不同的就是Pod引用我们自己的库的路径是本地相对路径。红框内的内容及Podspec的描述，两个红框指向的是同一文件；LICENSE即开源许可，一般不用管；README也是Cocoapods自动生成的描述，按照原有格式修改即可。</span><br><span class="line"></span><br><span class="line">  b.在上图中ReplaceMe.m文件处右键，Show in Finder。我们会发现两个平级目录，一个Classes保存我们类，还有一个Assets保存的是资源文件，例如图片等。这个示例文件ReplaceMe.m可以删除。</span><br><span class="line">![i自动生成的文件目录.png](https://upload-images.jianshu.io/upload_images/708960-eae9faf7a7a9b99b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line"> c.我们添加一个自定义类和方法，实现我们的库。</span><br><span class="line">![随手写个类方法.png](https://upload-images.jianshu.io/upload_images/708960-360c8003f2a6b0b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">d.在Demo实现调用，我们打印一下。尖括号引用，完美运行～</span><br><span class="line"> ![image-20180920171039773.png](https://upload-images.jianshu.io/upload_images/708960-a0c821e46e5c148a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">5. 配置xxx.podspec文件</span><br><span class="line"></span><br><span class="line">```text</span><br><span class="line">    s.name : 项目名</span><br><span class="line"></span><br><span class="line">    s.version : 版本号(需跟后面打 Tag 的值相等)</span><br><span class="line"></span><br><span class="line">    s.homepage : 项目主页（请注意，这里的地址跟git仓库地址有一定差别，请同学们看清截图示例并区分）</span><br><span class="line"></span><br><span class="line">    s.license : 开源协议（这里我们选择 MIT ）</span><br><span class="line"></span><br><span class="line">    s.source : Git 仓库地址（第二步所复制的仓库地址）</span><br><span class="line"></span><br><span class="line">    s.ios.deployment_target : 项目最低支持版本</span><br><span class="line"></span><br><span class="line">    s.source_files : 具体去那个目录下下载特定共享代码（注意：这里的地址与 .podspec 文件同级目录开始,，示例：PrivateLib/Classes/** /*表示如下目录下的所有文件</span><br></pre></td></tr></table></figure></p>
+<p>   <img src="https://upload-images.jianshu.io/upload_images/708960-b3974529a39d8928.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920172749679.png"><br><img src="https://upload-images.jianshu.io/upload_images/708960-4f8583344e025329.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920172815009.png"></p>
+<ol start="6">
+<li>验证.podspec 文件的格式正确性</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod lib lint --verbose</span><br></pre></td></tr></table></figure>
+
+<p> 出现下图，即代表成功；<br>这里有个小技巧，就是lint前可以先回到xcodeproj目录pod install一下，自己排查有没有编译问题；<br>如果还有其他报错例如描述不合法等情况，修改后重新lint即可。</p>
+<p>  <img src="https://upload-images.jianshu.io/upload_images/708960-097421c3e950217e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920175435541.png"></p>
+<ol start="7">
+<li><p>上传到Git，并标记Tag<br><img src="https://upload-images.jianshu.io/upload_images/708960-174af21d6edeca61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920184108974.png"></p>
+</li>
+<li><p>注册CocoaPods作者信息<br> a.现在你已经拥有一个成功的SoulToolsLibrary了，现在想要share到平台上，那么是不是需要注册一个账号呢？ok通过以下命令，将会给你的邮箱发送一封邮件，点击链接即可注册成功。</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk register yourEmail@gmail.com &#x27;yourName&#x27; --description=&#x27;Soul Personal Laptop&#x27; --verbose</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-efb057c84225a617.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="i申请账号.png"></p>
+<p> <img src="https://upload-images.jianshu.io/upload_images/708960-7927f80fb24e4a77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="去邮箱查询邮件.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-f3e74c1c662e0eab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="点击激活链接之后.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-ab1c0d9ac31ccd97.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="搞定.png"></p>
+<p>账号创建完毕！～～</p>
+<ol start="9">
+<li>使用trunk上传pod</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push SoulToolsLibrary.podspec --verbose</span><br></pre></td></tr></table></figure>
+
+<p> <img src="https://upload-images.jianshu.io/upload_images/708960-54ae6482350aefb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920190141130.png"></p>
+<p>感觉ok了，可以访问看一下这个json，一目了然就不分析了。<br><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/CocoaPods/Specs/b2c3735a9046e5373956b35a510414a93b0af5ff/Specs/4/b/a/SoulToolsLibrary/0.1.0/SoulToolsLibrary.podspec.json">https://raw.githubusercontent.com/CocoaPods/Specs/b2c3735a9046e5373956b35a510414a93b0af5ff/Specs/4/b/a/SoulToolsLibrary/0.1.0/SoulToolsLibrary.podspec.json</a></p>
+<ol start="10">
+<li>搜索验证并使用<br>a.新建一个项目，并初始化Pod<br><img src="https://upload-images.jianshu.io/upload_images/708960-b180bd95e038232d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920193107194.png"></li>
+</ol>
+<p>b.编辑Podfile并install<br><img src="https://upload-images.jianshu.io/upload_images/708960-c3f18da69ae0de45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920193647745.png"></p>
+<p>c.Test调用打印<br><img src="https://upload-images.jianshu.io/upload_images/708960-e8d3d73b38eedb68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>d.pod Search 一下 or pod try 一下；记得先pod setup更新一下本地库<br><img src="https://upload-images.jianshu.io/upload_images/708960-8bff14fdb8dd32d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920191220476.png"></p>
+<h2 id="上传一个私有Pod（对比公有）"><a href="#上传一个私有Pod（对比公有）" class="headerlink" title="上传一个私有Pod（对比公有）"></a>上传一个私有Pod（对比公有）</h2><hr>
+<p>1.托管代码的<strong>SoulToolsLibrary</strong>需要关闭开源。<br>2.将生成的podspec文件托管到SoulPrivatePodspec中，SoulPrivatePodspec仓库可以开源。<br>3.pod install的时候需要验证Git权限，即登录账号密码。</p>
+<h1 id="Cocoapods进阶"><a href="#Cocoapods进阶" class="headerlink" title="Cocoapods进阶"></a>Cocoapods进阶</h1><hr>
+<p>1.libwebp库Pod失败<br>业务场景：使用SDWebImage时需要支持webp，引入库SDWebImage&#x2F;WebP后Pod install时执行失败。<br>解决思路：pod的原理就是从.podspec中获取配置，一般从github中同步代码；所以我们看一下托管的仓库地址，发现是google家的，一想那就是因为天朝的墙了<br>解决办法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、先通过 find ~/.cocoapods/repos/master -iname libwebp 直接就可以找到libwebp的地址</span><br><span class="line">2、在Finder中找到对应版本的文件夹，找到libwebp.podspec.json文件</span><br><span class="line">3、修改https://chromium.googlesource.com/webm/libwebp，替换为https://github.com/webmproject/libwebp.git</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Terminal/" rel="tag"># Terminal</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/20/%E6%90%AD%E5%BB%BAHexo-Blog%E5%B9%B6%E8%87%AA%E5%8A%A8%E5%8F%91%E5%B8%83%E8%87%B3Github-Pages/" rel="prev" title="搭建Hexo Blog并自动发布至Github Pages">
+      <i class="fa fa-chevron-left"></i> 搭建Hexo Blog并自动发布至Github Pages
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/30/Python%E5%85%A5%E5%9D%91/" rel="next" title="Python 环境配置记录">
+      Python 环境配置记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%AF%E4%BE%8B%E5%90%B9%E6%B0%B4"><span class="nav-number">1.</span> <span class="nav-text">惯例吹水</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFCocoaPods"><span class="nav-number">1.1.</span> <span class="nav-text">什么是CocoaPods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E5%AE%89%E8%A3%85CocoaPods"><span class="nav-number">1.2.</span> <span class="nav-text">怎么安装CocoaPods</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E4%B8%80%E4%B8%AA%E5%85%AC%E6%9C%89Pod"><span class="nav-number">2.</span> <span class="nav-text">上传一个公有Pod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E4%B8%80%E4%B8%AA%E7%A7%81%E6%9C%89Pod%EF%BC%88%E5%AF%B9%E6%AF%94%E5%85%AC%E6%9C%89%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">上传一个私有Pod（对比公有）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cocoapods%E8%BF%9B%E9%98%B6"><span class="nav-number"></span> <span class="nav-text">Cocoapods进阶</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">soulstayreal@gmail.com</p>
+  <div class="site-description" itemprop="description">梦里不知天在水，满船清梦压星河</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">soulstayreal@gmail.com</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

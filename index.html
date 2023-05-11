@@ -218,7 +218,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-11 18:05:04" itemprop="dateModified" datetime="2023-05-11T18:05:04+08:00">2023-05-11</time>
+                <time title="修改时间：2023-05-11 18:41:40" itemprop="dateModified" datetime="2023-05-11T18:41:40+08:00">2023-05-11</time>
               </span>
 
           
@@ -233,6 +233,184 @@
 
       
           <p>打包2023年05月12日前简书博客，待调整样式及归档。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://gengjian.github.io/2023/05/11/Tools-MacOS%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="soulstayreal@gmail.com">
+      <meta itemprop="description" content="梦里不知天在水，满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GengJian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/11/Tools-MacOS%E9%85%8D%E7%BD%AE%E9%80%9A%E7%94%A8%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">Mac装机软件及环境变量配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-05-11 18:38:08 / 修改时间：18:41:40" itemprop="dateCreated datePublished" datetime="2023-05-11T18:38:08+08:00">2023-05-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mac/" itemprop="url" rel="index"><span itemprop="name">Mac</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mac/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>每次更换电脑的时候难免要重新装一遍常用软件和开发环境，这里记录一下必备命令行工具的安装列表及成功截图（在有梯子的情况下，不讨论网络卡顿的情况）。</p>
+</blockquote>
+<p>#1. 安装HomeBrew[<a target="_blank" rel="noopener" href="https://brew.sh/]">https://brew.sh/]</a></p>
+<p> 通过Curl 安装homebrew</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p> 刷新环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/gengjian/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br><span class="line">```bash</span><br><span class="line">验证安装完成</span><br><span class="line">```bash</span><br><span class="line">brew <span class="built_in">help</span></span><br><span class="line">```bash</span><br><span class="line">![Homebrew安装完成记得刷新环境变量.png](https://upload-images.jianshu.io/upload_images/708960-56d9b9f1f1d8f7d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 美化终端命令行工具iTerm2 + OmMyZsh[https://ohmyz.sh/]</span></span><br><span class="line"></span><br><span class="line">通过crul安装zsh主题，毕竟mac默认用zshell替代bashshell了</span><br><span class="line">```curl</span><br><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>&quot;</span></span><br><span class="line">```curl</span><br><span class="line">![安装ohmyzsh完成.png](https://upload-images.jianshu.io/upload_images/708960-f867c93bbd64e2ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 安装Rvm区分ruby镜像[http://rvm.io/]</span></span><br><span class="line">安装gpg用于rvm校验安装包</span><br><span class="line">```zsh</span><br><span class="line">brew install gpg</span><br><span class="line">```zsh</span><br><span class="line"></span><br><span class="line">Install GPG keys</span><br><span class="line">```zsh</span><br><span class="line">gpg --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB</span><br><span class="line">```zsh</span><br><span class="line"></span><br><span class="line">通过curl安装rvm</span><br><span class="line">```zsh</span><br><span class="line">\curl -sSL https://get.rvm.io | bash -s stable</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-dbf8fb731755fd52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="安装RVM成功.png"></p>
+<p>获取最新的ruby版本并切换镜像<br>–default指的是每次打开命令行工具默认使用此版本的gem</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rvm list known</span><br><span class="line">rvm install 2.7.2</span><br><span class="line">rvm use 2.7.2 --default </span><br><span class="line">rvm list</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-823326bbc59ac20c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="安装区分于系统的独立Ruby环境完成.png"></p>
+<h1 id="4-安装iOS包管理工具-Cocoapods-https-cocoapods-org"><a href="#4-安装iOS包管理工具-Cocoapods-https-cocoapods-org" class="headerlink" title="4. 安装iOS包管理工具 Cocoapods [https://cocoapods.org/]"></a>4. 安装iOS包管理工具 Cocoapods [<a target="_blank" rel="noopener" href="https://cocoapods.org/]">https://cocoapods.org/]</a></h1><p>注：gem是rubygems管理工具，–verbose是打印详细日志<br>通过rubgem安装cocoapods</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install cocoapods --verbose</span><br></pre></td></tr></table></figure>
+<p>查询cocoapods安装结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod --version</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-f09a7cf405aa5e74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="cocoapods安装完成.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://gengjian.github.io/2023/05/10/Github-%E9%85%8D%E7%BD%AESSH%E5%85%AC%E7%A7%81%E9%92%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="soulstayreal@gmail.com">
+      <meta itemprop="description" content="梦里不知天在水，满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GengJian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/10/Github-%E9%85%8D%E7%BD%AESSH%E5%85%AC%E7%A7%81%E9%92%A5/" class="post-title-link" itemprop="url">GitHub之SSH公钥笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-10 12:34:56" itemprop="dateCreated datePublished" datetime="2023-05-10T12:34:56+08:00">2023-05-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 18:41:40" itemprop="dateModified" datetime="2023-05-11T18:41:40+08:00">2023-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><blockquote>
+<p>读写repo时一般有两种办法：通过Https时依赖账号和密码(个人令牌)，或者通过SSH证书获取访问权限，此时需要的是在个人账户下统一配置公钥即可。</p>
+</blockquote>
+<p>因为私钥留存在本地<code>~/.ssh</code>目录中，git-CLI用私钥访问远端仓库时，GitHub将通过公钥验证此访问时的私钥是否合法。</p>
+<blockquote>
+<p>通过GithubAction等CI-CD操作时：因为repoA要读写repoB的内容，那么repo A就要配置私钥，repo B要配置公钥。</p>
+</blockquote>
+<p>repo A 应在 <code>Repository secret</code>下填写私钥，<br><img src="https://upload-images.jianshu.io/upload_images/708960-afe3d20308edaad9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="repo A.png"></p>
+<p>repo B 应在 <code>Deploy keys</code>下填写公钥，<br><img src="https://upload-images.jianshu.io/upload_images/708960-650dc25dfae87b2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="repo B.png"></p>
+<p>以此实现repo A访问repo B的权限。<br><img src="https://upload-images.jianshu.io/upload_images/708960-ecbf72f55e7b33ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="A Action CI.png"><br><img src="https://upload-images.jianshu.io/upload_images/708960-e2b84f5f8512d2ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="B Action CD.png"></p>
+<h2 id="生成命令"><a href="#生成命令" class="headerlink" title="生成命令"></a>生成命令</h2><blockquote>
+<p>github介绍文档<br><a target="_blank" rel="noopener" href="https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/about-ssh">https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/about-ssh</a></p>
+</blockquote>
+<blockquote>
+<p>gitee介绍文档<br><a target="_blank" rel="noopener" href="https://gitee.com/help/categories/38">https://gitee.com/help/categories/38</a></p>
+</blockquote>
+<p>本地已ssh公钥查询</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -al ~/.ssh</span><br></pre></td></tr></table></figure>
+
+<p>本地ssh域名配置查询</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/config</span><br></pre></td></tr></table></figure>
+
+<p>访问权限查询</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@gitee.com</span><br><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -283,7 +461,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-11 18:05:04" itemprop="dateModified" datetime="2023-05-11T18:05:04+08:00">2023-05-11</time>
+                <time title="修改时间：2023-05-11 18:41:40" itemprop="dateModified" datetime="2023-05-11T18:41:40+08:00">2023-05-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -367,7 +545,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-11 18:05:04" itemprop="dateModified" datetime="2023-05-11T18:05:04+08:00">2023-05-11</time>
+                <time title="修改时间：2023-05-11 18:41:40" itemprop="dateModified" datetime="2023-05-11T18:41:40+08:00">2023-05-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -396,6 +574,168 @@
 <li>命令行的</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install --upgrade pip</span><br><span class="line">sudo pip install ipython</span><br><span class="line">➜  ~ python -m IPython</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://gengjian.github.io/2022/02/01/iOS-CocoaPods%E5%BA%93%E6%90%AD%E5%BB%BA%E5%8F%8A%E6%89%98%E7%AE%A1%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="soulstayreal@gmail.com">
+      <meta itemprop="description" content="梦里不知天在水，满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GengJian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/01/iOS-CocoaPods%E5%BA%93%E6%90%AD%E5%BB%BA%E5%8F%8A%E6%89%98%E7%AE%A1%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">Cocoapods私有库托管</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-01 10:30:00" itemprop="dateCreated datePublished" datetime="2022-02-01T10:30:00+08:00">2022-02-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-11 18:41:40" itemprop="dateModified" datetime="2023-05-11T18:41:40+08:00">2023-05-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="惯例吹水"><a href="#惯例吹水" class="headerlink" title="惯例吹水"></a>惯例吹水</h2><p>众所周知CocoaPods，已经成为iOS&#x2F;Mac OS程序员离不开的三方库管理工具。</p>
+<p>除了我们引用一些知名的大佬框架以外，有时候我们也想分享一下自己的小轮子，或者托管自己的私有框架，尤其是组件化需要，想要上传属于自己的CocoaPods怎么办呢？</p>
+<p>查阅了官方文档和一些前辈们的blog，感觉并不难，为了便于理解每一步命令的作用，决定还是需要自己手撸一遍。</p>
+<h3 id="什么是CocoaPods"><a href="#什么是CocoaPods" class="headerlink" title="什么是CocoaPods"></a>什么是CocoaPods</h3><p>Define once, update easily。看到宣传标语就感觉很easy。CocoaPods是OS X和iOS下的一个第三类库管理工具，通过PodFile文件我们可以为项目添加被称为“Pods”的依赖库（这些类库必须是CocoaPods本身所支持的），并且可以轻松管理其版本。</p>
+<h3 id="怎么安装CocoaPods"><a href="#怎么安装CocoaPods" class="headerlink" title="怎么安装CocoaPods"></a>怎么安装CocoaPods</h3><p>官方app下载地址</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://cocoapods.org/app">https://CocoaPods.org/app</a></p>
+</blockquote>
+<p>民间小白鼠🐁教程</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e85e71ed64e6">https://www.jianshu.com/p/e85e71ed64e6</a></p>
+</blockquote>
+<p><em><strong>涉及到的一些概念</strong></em></p>
+<p><strong>Podfile</strong>：  该文件为配置引用三方库文件，指定引用的库以及版本。</p>
+<p><strong>Podfile.lock:</strong>  cocoapods根据本地podfile和远端仓库生成版本管理文件，便于用户协作。</p>
+<p><strong>.xcodeproj:</strong>  iOS项目工程目录，本质是个文件夹，可用Xcode打开。</p>
+<p><strong>.xcworkspace：</strong>工作空间，联合多个项目工程，pod install后自动生成。</p>
+<p><strong>.podspec :</strong>  该文件为你的代码仓库索引描述文件，<strong>CocoaPods</strong>通过该文件对你真正存储代码工程的 Git 仓库进行索引与下载</p>
+<p><em><strong>本博客演示所用文件</strong></em></p>
+<p><strong>SoulToolsLibrary:</strong>  托管我们的实现代码（根据公有私有选择是否公开），需要remote对应远程Git仓库</p>
+<p><strong>SoulPrivatePodspec:</strong>  托管我们生成的Podspec文件（私有Pod才用），私有库隐藏了源码则需要公开本仓库</p>
+<p><strong>SoulTestDemo:</strong>  模拟三方用户新建工程测试我们的Pod，不需要远程仓库，如果你非要建，就当我没说</p>
+<p>以上文件目录，均放在**~&#x2F;MyPodLibrary**目录里了，方便演示</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-aac4236d6207ebdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920110426392.png"></p>
+<h2 id="上传一个公有Pod"><a href="#上传一个公有Pod" class="headerlink" title="上传一个公有Pod"></a>上传一个公有Pod</h2><hr>
+<p>官方文档如下</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://guides.cocoapods.org/making/index.html">https://guides.CocoaPods.org/making/index.html</a></p>
+</blockquote>
+<ol>
+<li><p>搜索有没有同名库</p>
+<p> (因为最后一步CocoaPods会校验同名的库只有原作者才能上传)</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-f5856ed04e85b92f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180919205834417.png"></p>
+</li>
+<li><p>创建远程仓库</p>
+</li>
+</ol>
+<p>我这里采用的gitee.com。其实和github.com是一样的，不过github只能建一个私有仓库不够用，所以就用码云了。</p>
+<p>a.首先必须创建<strong>SoulToolsLibrary</strong>，这个仓库用来保存我们的轮子源码。<br>  开源的话记得选开源许可证，我就直接MIT了；不开源的话，需要创建<strong>SoulPrivatePodspec</strong>仓库。这里不需要添加**.Readme**初始化，因为后边pods会自动帮我们添加Readme模板。</p>
+<p> <img src="https://upload-images.jianshu.io/upload_images/708960-9d7bf60ec3af3a8e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Gitee"></p>
+<p>创建完成后无需Clone到本地目录，等下把CocoaPods自动生成的同名目录Remote过来就好了。后面我直接用SourceTree了，方便演示，当然也可以用命令行。<br> <em>(本模块演示公有Pod，可以直接跳转到步骤c，私有的需要b的，下个模块单独解释。)</em></p>
+<p>b.其次私有库的话需要创建<strong>SoulPrivatePodspec</strong>，这个仓库用来储存各个版本的**.podspec索引文件**。<br>直接开源就好，不然别人pod install的时候，还要获取你这个git权限。<br>创建完成后Clone到本地目录，我这里直接用SourceTree了，方便演示，当然也可以用命令行。</p>
+<p>c.最后我们本地再建一个目录<strong>SoulTestDemo</strong>，用来模拟第三方用户工程测试我们pod能不能用，这个就留在本地就好了，不用同步到远端了。</p>
+<p>最后目录如下图<br><img src="https://upload-images.jianshu.io/upload_images/708960-5718cdeb26a01ad8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="演示文件目录.png"></p>
+<ol start="3">
+<li>本地新建工程<br><img src="https://upload-images.jianshu.io/upload_images/708960-2496697312a5081c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="本地新建测试工程.png"></li>
+</ol>
+<p>我们现在需要通过github的模板生成自己的Pod库开发环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/*进入本地目录*/</span><br><span class="line">cd ~/Users/mac/MyPodLibrary/SoulToolsLibrary</span><br><span class="line"></span><br><span class="line">/*创建我们的pod库开发环境*/</span><br><span class="line">pod lib create SoulToolsLibrary</span><br><span class="line"></span><br><span class="line">/*配置开发环境*/</span><br><span class="line">直接回车就是带下划线的默认值，具体配置如下附图</span><br><span class="line"></span><br><span class="line">/*说明*/</span><br><span class="line">配置完成后 会自动创建并打开Workspace</span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">附图：![image-20180920115446795.png](https://upload-images.jianshu.io/upload_images/708960-e71248424c34d839.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>   &#x2F;&#x2F;platform 发布平台<br>    iOS<br>    &#x2F;&#x2F;language 开发使用的语言<br>    ObjC<br>    &#x2F;&#x2F;demo 是否包含演示程序;有两个用途:1.编写框架的时候可以用来测试,2.支持pod try MyLib(SoulToolsLibrary)<br>    Yes<br>    &#x2F;&#x2F;testing frameworks 使用什么测试框架;<br>    None<br>    &#x2F;&#x2F;view base testing 是否使用基于视图的测试;亲测选择yes的话，将自动导入FBSnapShotTestCase，这个框架只支持swift3.0，要求Xcode8一下…<br>    NO<br>    &#x2F;&#x2F;class prefix 类名前缀;建议两位大写英文字母<br>    ST<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4. 编写Library以及Demo</span><br><span class="line"></span><br><span class="line">![编写Library以及Demo.png](https://upload-images.jianshu.io/upload_images/708960-4a992a7ae22eb609.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">  a.在上述自动打开的workspace，我们可以看到就说熟悉的pod install之后生成xworkspace是一样的，唯一不同的就是Pod引用我们自己的库的路径是本地相对路径。红框内的内容及Podspec的描述，两个红框指向的是同一文件；LICENSE即开源许可，一般不用管；README也是Cocoapods自动生成的描述，按照原有格式修改即可。</span><br><span class="line"></span><br><span class="line">  b.在上图中ReplaceMe.m文件处右键，Show in Finder。我们会发现两个平级目录，一个Classes保存我们类，还有一个Assets保存的是资源文件，例如图片等。这个示例文件ReplaceMe.m可以删除。</span><br><span class="line">![i自动生成的文件目录.png](https://upload-images.jianshu.io/upload_images/708960-eae9faf7a7a9b99b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line"> c.我们添加一个自定义类和方法，实现我们的库。</span><br><span class="line">![随手写个类方法.png](https://upload-images.jianshu.io/upload_images/708960-360c8003f2a6b0b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">d.在Demo实现调用，我们打印一下。尖括号引用，完美运行～</span><br><span class="line"> ![image-20180920171039773.png](https://upload-images.jianshu.io/upload_images/708960-a0c821e46e5c148a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">5. 配置xxx.podspec文件</span><br><span class="line"></span><br><span class="line">```text</span><br><span class="line">    s.name : 项目名</span><br><span class="line"></span><br><span class="line">    s.version : 版本号(需跟后面打 Tag 的值相等)</span><br><span class="line"></span><br><span class="line">    s.homepage : 项目主页（请注意，这里的地址跟git仓库地址有一定差别，请同学们看清截图示例并区分）</span><br><span class="line"></span><br><span class="line">    s.license : 开源协议（这里我们选择 MIT ）</span><br><span class="line"></span><br><span class="line">    s.source : Git 仓库地址（第二步所复制的仓库地址）</span><br><span class="line"></span><br><span class="line">    s.ios.deployment_target : 项目最低支持版本</span><br><span class="line"></span><br><span class="line">    s.source_files : 具体去那个目录下下载特定共享代码（注意：这里的地址与 .podspec 文件同级目录开始,，示例：PrivateLib/Classes/** /*表示如下目录下的所有文件</span><br></pre></td></tr></table></figure></p>
+<p>   <img src="https://upload-images.jianshu.io/upload_images/708960-b3974529a39d8928.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920172749679.png"><br><img src="https://upload-images.jianshu.io/upload_images/708960-4f8583344e025329.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920172815009.png"></p>
+<ol start="6">
+<li>验证.podspec 文件的格式正确性</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod lib lint --verbose</span><br></pre></td></tr></table></figure>
+
+<p> 出现下图，即代表成功；<br>这里有个小技巧，就是lint前可以先回到xcodeproj目录pod install一下，自己排查有没有编译问题；<br>如果还有其他报错例如描述不合法等情况，修改后重新lint即可。</p>
+<p>  <img src="https://upload-images.jianshu.io/upload_images/708960-097421c3e950217e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920175435541.png"></p>
+<ol start="7">
+<li><p>上传到Git，并标记Tag<br><img src="https://upload-images.jianshu.io/upload_images/708960-174af21d6edeca61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920184108974.png"></p>
+</li>
+<li><p>注册CocoaPods作者信息<br> a.现在你已经拥有一个成功的SoulToolsLibrary了，现在想要share到平台上，那么是不是需要注册一个账号呢？ok通过以下命令，将会给你的邮箱发送一封邮件，点击链接即可注册成功。</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk register yourEmail@gmail.com &#x27;yourName&#x27; --description=&#x27;Soul Personal Laptop&#x27; --verbose</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-efb057c84225a617.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="i申请账号.png"></p>
+<p> <img src="https://upload-images.jianshu.io/upload_images/708960-7927f80fb24e4a77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="去邮箱查询邮件.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-f3e74c1c662e0eab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="点击激活链接之后.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/708960-ab1c0d9ac31ccd97.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="搞定.png"></p>
+<p>账号创建完毕！～～</p>
+<ol start="9">
+<li>使用trunk上传pod</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push SoulToolsLibrary.podspec --verbose</span><br></pre></td></tr></table></figure>
+
+<p> <img src="https://upload-images.jianshu.io/upload_images/708960-54ae6482350aefb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920190141130.png"></p>
+<p>感觉ok了，可以访问看一下这个json，一目了然就不分析了。<br><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/CocoaPods/Specs/b2c3735a9046e5373956b35a510414a93b0af5ff/Specs/4/b/a/SoulToolsLibrary/0.1.0/SoulToolsLibrary.podspec.json">https://raw.githubusercontent.com/CocoaPods/Specs/b2c3735a9046e5373956b35a510414a93b0af5ff/Specs/4/b/a/SoulToolsLibrary/0.1.0/SoulToolsLibrary.podspec.json</a></p>
+<ol start="10">
+<li>搜索验证并使用<br>a.新建一个项目，并初始化Pod<br><img src="https://upload-images.jianshu.io/upload_images/708960-b180bd95e038232d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920193107194.png"></li>
+</ol>
+<p>b.编辑Podfile并install<br><img src="https://upload-images.jianshu.io/upload_images/708960-c3f18da69ae0de45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920193647745.png"></p>
+<p>c.Test调用打印<br><img src="https://upload-images.jianshu.io/upload_images/708960-e8d3d73b38eedb68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>d.pod Search 一下 or pod try 一下；记得先pod setup更新一下本地库<br><img src="https://upload-images.jianshu.io/upload_images/708960-8bff14fdb8dd32d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image-20180920191220476.png"></p>
+<h2 id="上传一个私有Pod（对比公有）"><a href="#上传一个私有Pod（对比公有）" class="headerlink" title="上传一个私有Pod（对比公有）"></a>上传一个私有Pod（对比公有）</h2><hr>
+<p>1.托管代码的<strong>SoulToolsLibrary</strong>需要关闭开源。<br>2.将生成的podspec文件托管到SoulPrivatePodspec中，SoulPrivatePodspec仓库可以开源。<br>3.pod install的时候需要验证Git权限，即登录账号密码。</p>
+<h1 id="Cocoapods进阶"><a href="#Cocoapods进阶" class="headerlink" title="Cocoapods进阶"></a>Cocoapods进阶</h1><hr>
+<p>1.libwebp库Pod失败<br>业务场景：使用SDWebImage时需要支持webp，引入库SDWebImage&#x2F;WebP后Pod install时执行失败。<br>解决思路：pod的原理就是从.podspec中获取配置，一般从github中同步代码；所以我们看一下托管的仓库地址，发现是google家的，一想那就是因为天朝的墙了<br>解决办法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、先通过 find ~/.cocoapods/repos/master -iname libwebp 直接就可以找到libwebp的地址</span><br><span class="line">2、在Finder中找到对应版本的文件夹，找到libwebp.podspec.json文件</span><br><span class="line">3、修改https://chromium.googlesource.com/webm/libwebp，替换为https://github.com/webmproject/libwebp.git</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -446,7 +786,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-11 18:05:04" itemprop="dateModified" datetime="2023-05-11T18:05:04+08:00">2023-05-11</time>
+                <time title="修改时间：2023-05-11 18:41:40" itemprop="dateModified" datetime="2023-05-11T18:41:40+08:00">2023-05-11</time>
               </span>
 
           
@@ -510,8 +850,17 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-11 18:05:04" itemprop="dateModified" datetime="2023-05-11T18:05:04+08:00">2023-05-11</time>
+                <time title="修改时间：2023-05-11 18:41:40" itemprop="dateModified" datetime="2023-05-11T18:41:40+08:00">2023-05-11</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+            </span>
 
           
 
@@ -571,7 +920,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2015/06/28/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2015/06/28/hello-world/" class="post-title-link" itemprop="url">Hello Hexo World</a>
         </h2>
 
         <div class="post-meta">
@@ -588,7 +937,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-11 18:05:04" itemprop="dateModified" datetime="2023-05-11T18:05:04+08:00">2023-05-11</time>
+                <time title="修改时间：2023-05-11 18:41:40" itemprop="dateModified" datetime="2023-05-11T18:41:40+08:00">2023-05-11</time>
               </span>
 
           
@@ -696,20 +1045,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
