@@ -20,31 +20,34 @@
     var CONFIG = {"hostname":"gengjian.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="梦里不知天在水，满船清梦压星河">
-<meta property="og:type" content="website">
-<meta property="og:title" content="GengJian&#39;s Blog">
-<meta property="og:url" content="https://gengjian.github.io/index.html">
+  <meta name="description" content="问题无论是我们的开发机器，还是打包机MacMini，经常因为缓存文件或打包文件过多导致硬盘不足。 所以我们需要定期清理垃圾文件。 解决方案需要删除Xcode编译器产生的索引文件及中间产物目录DriverData。需要删除Xcode打包完成的Archive文件目录。需要删除每次连接真机后自动下载的调试包（类似Android的adb文件）DeviceSupport。需要删除不必要的模拟器（每次增量升级">
+<meta property="og:type" content="article">
+<meta property="og:title" content="清理Xcode相关垃圾">
+<meta property="og:url" content="https://gengjian.github.io/2021/10/01/Tools-%E6%B8%85%E7%90%86Mac%E7%A1%AC%E7%9B%98%E4%B9%8Bxcode%E7%9B%B8%E5%85%B3%E5%9E%83%E5%9C%BE/index.html">
 <meta property="og:site_name" content="GengJian&#39;s Blog">
-<meta property="og:description" content="梦里不知天在水，满船清梦压星河">
+<meta property="og:description" content="问题无论是我们的开发机器，还是打包机MacMini，经常因为缓存文件或打包文件过多导致硬盘不足。 所以我们需要定期清理垃圾文件。 解决方案需要删除Xcode编译器产生的索引文件及中间产物目录DriverData。需要删除Xcode打包完成的Archive文件目录。需要删除每次连接真机后自动下载的调试包（类似Android的adb文件）DeviceSupport。需要删除不必要的模拟器（每次增量升级">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-01T02:30:00.000Z">
+<meta property="article:modified_time" content="2023-05-11T08:56:04.322Z">
 <meta property="article:author" content="soulstayreal@gmail.com">
-<meta property="article:tag" content="iOS, Android, APP">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="Mac">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://gengjian.github.io/">
+<link rel="canonical" href="https://gengjian.github.io/2021/10/01/Tools-%E6%B8%85%E7%90%86Mac%E7%A1%AC%E7%9B%98%E4%B9%8Bxcode%E7%9B%B8%E5%85%B3%E5%9E%83%E5%9C%BE/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>GengJian's Blog</title>
+  <title>清理Xcode相关垃圾 | GengJian's Blog</title>
   
 
 
@@ -143,360 +146,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://gengjian.github.io/2023/05/11/%E7%AE%80%E4%B9%A6%E8%BF%81%E7%A7%BB%E8%AE%B0%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="soulstayreal@gmail.com">
-      <meta itemprop="description" content="梦里不知天在水，满船清梦压星河">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GengJian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/05/11/%E7%AE%80%E4%B9%A6%E8%BF%81%E7%A7%BB%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">简书迁移分割线</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-05-12 00:00:01" itemprop="dateCreated datePublished" datetime="2023-05-12T00:00:01+08:00">2023-05-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-11 16:56:04" itemprop="dateModified" datetime="2023-05-11T16:56:04+08:00">2023-05-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>打包2023年05月12日前简书博客，待调整样式及归档。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://gengjian.github.io/2022/09/30/Android%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA%E4%B8%8D%E5%AE%8C%E5%85%A8%E8%AE%B0%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="soulstayreal@gmail.com">
-      <meta itemprop="description" content="梦里不知天在水，满船清梦压星河">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GengJian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/30/Android%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA%E4%B8%8D%E5%AE%8C%E5%85%A8%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">Android之项目搭建</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-01 00:00:01" itemprop="dateCreated datePublished" datetime="2022-10-01T00:00:01+08:00">2022-10-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-11 16:56:04" itemprop="dateModified" datetime="2023-05-11T16:56:04+08:00">2023-05-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="版本汇总"><a href="#版本汇总" class="headerlink" title="版本汇总"></a>版本汇总</h2><p><img src="https://upload-images.jianshu.io/upload_images/708960-d0738f866e49003f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Android OS用户分布 2021-09-01.png"></p>
-<h2 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h2><p>通过模版创建<br><img src="https://upload-images.jianshu.io/upload_images/708960-3e137dc21eb10153.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="EmptyActivity模版.png"><br><strong>Name：</strong>项目名称；项目目录文件夹的名称，会默认展示在启动页，一般要求开头大写。<br><strong>Package name：</strong>唯一包名；在应用市场区分身份标识，用于更新覆盖等。<br><strong>Mininum SDK:</strong> 支持的最低Android OS版本；应用市场可通过此版本检查用户手机是否可以安装；但如果低于最低版本的用户通过直接安装apk或者aab文件的话，可能出现可以安装但无法打开的情况。<br><strong>Use legacy android.support libraries：</strong>如果您的应用需要旧版库支持，请选中复选框。</p>
-<h2 id="同步Gradle"><a href="#同步Gradle" class="headerlink" title="同步Gradle"></a>同步Gradle</h2><p>Gradle 是一个开源构建自动化工具，专注于灵活性和性能。可以说是接管了Android中的包管理工具及编译打包等流程。</p>
-<p>当我们启动项目时，AndroidStudio会自动执行一次同步。</p>
-<h2 id="分析文件目录Directory"><a href="#分析文件目录Directory" class="headerlink" title="分析文件目录Directory"></a>分析文件目录Directory</h2><p><strong>MainActivity</strong> 是应用的主入口；相当于iOS创建项目时自带的ViewController；<br><strong>activity_main</strong>位于res&#x2F;layout目录中，是MainActivity的UI布局文件；相当于iOS中的xib文件，通过预览的方式实现所见即所得；<br><strong>AndroidManifest.xml</strong>是应用的清单文件，描述了应用的基本特性并定义了每个应用组件；相当于iOS中的Build Phase配置；</p>
-<h2 id="分析脚本目录Script"><a href="#分析脚本目录Script" class="headerlink" title="分析脚本目录Script"></a>分析脚本目录Script</h2><p>有两个使用此名称的文件：一个针对项目“Project: My First App”，相当于iOS中的Project Setting，另一个针对应用模块“Module: My_First_App.app”，相当于iOS中的 Target Setting。每个模块均有自己的 <code>build.gradle</code> 文件。</p>
-<h2 id="运行调试"><a href="#运行调试" class="headerlink" title="运行调试"></a>运行调试</h2><ol>
-<li>可采用真机调试，需要安装对应的驱动，并打开设备的开发者模式；</li>
-<li>可采用模拟器（AVD Manager）；</li>
-</ol>
-<p>通过点击IDE的▶️按钮开始运行即可。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://gengjian.github.io/2022/04/30/Python%E5%85%A5%E5%9D%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="soulstayreal@gmail.com">
-      <meta itemprop="description" content="梦里不知天在水，满船清梦压星河">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GengJian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/30/Python%E5%85%A5%E5%9D%91/" class="post-title-link" itemprop="url">Python 环境配置记录</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-05-01 00:00:01" itemprop="dateCreated datePublished" datetime="2022-05-01T00:00:01+08:00">2022-05-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-11 16:56:04" itemprop="dateModified" datetime="2023-05-11T16:56:04+08:00">2023-05-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h2><ul>
-<li>官方的：IDEL+Python Luncher</li>
-<li>好用的：PyCharm</li>
-<li>命令行的</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install --upgrade pip</span><br><span class="line">sudo pip install ipython</span><br><span class="line">➜  ~ python -m IPython</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://gengjian.github.io/2022/01/20/%E6%90%AD%E5%BB%BAHexo-Blog%E5%B9%B6%E8%87%AA%E5%8A%A8%E5%8F%91%E5%B8%83%E8%87%B3Github-Pages/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="soulstayreal@gmail.com">
-      <meta itemprop="description" content="梦里不知天在水，满船清梦压星河">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GengJian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/20/%E6%90%AD%E5%BB%BAHexo-Blog%E5%B9%B6%E8%87%AA%E5%8A%A8%E5%8F%91%E5%B8%83%E8%87%B3Github-Pages/" class="post-title-link" itemprop="url">搭建Hexo Blog并自动发布至Github Pages</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-20 11:43:44" itemprop="dateCreated datePublished" datetime="2022-01-20T11:43:44+08:00">2022-01-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-11 16:56:04" itemprop="dateModified" datetime="2023-05-11T16:56:04+08:00">2023-05-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://gengjian.github.io/2022/01/18/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="soulstayreal@gmail.com">
-      <meta itemprop="description" content="梦里不知天在水，满船清梦压星河">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GengJian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/18/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-18 12:34:56" itemprop="dateCreated datePublished" datetime="2022-01-18T12:34:56+08:00">2022-01-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-11 16:56:04" itemprop="dateModified" datetime="2023-05-11T16:56:04+08:00">2023-05-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -512,10 +165,9 @@
       <meta itemprop="name" content="GengJian's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/01/Tools-%E6%B8%85%E7%90%86Mac%E7%A1%AC%E7%9B%98%E4%B9%8Bxcode%E7%9B%B8%E5%85%B3%E5%9E%83%E5%9C%BE/" class="post-title-link" itemprop="url">清理Xcode相关垃圾</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          清理Xcode相关垃圾
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -545,7 +197,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>无论是我们的开发机器，还是打包机MacMini，经常因为缓存文件或打包文件过多导致硬盘不足。</p>
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>无论是我们的开发机器，还是打包机MacMini，经常因为缓存文件或打包文件过多导致硬盘不足。</p>
 <p>所以我们需要定期清理垃圾文件。</p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>需要删除Xcode编译器产生的索引文件及中间产物目录DriverData。<br>需要删除Xcode打包完成的Archive文件目录。<br>需要删除每次连接真机后自动下载的调试包（类似Android的adb文件）DeviceSupport。<br>需要删除不必要的模拟器（每次增量升级xcode，原有的模拟器数据会保留，持久占用硬盘）。</p>
 <hr>
@@ -560,21 +212,34 @@
 <p>相关的文章<br>Jenkins上使用的脚本备份</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先查询一下当前硬盘空间</span></span><br><span class="line">echo &quot;🌞 0、开始清理前硬盘空间&quot;</span><br><span class="line">df -lh</span><br><span class="line"></span><br><span class="line">echo &quot;------------1、准备删除 ~/Library/Developer/Xcode/DerivedData&quot;</span><br><span class="line">for file in ~/Library/Developer/Xcode/DerivedData/*;do</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确定是目录</span></span><br><span class="line">if test -d $file;then</span><br><span class="line">echo &quot;删除---&gt;&quot;$file</span><br><span class="line">rm -rf $file</span><br><span class="line">fi</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">echo &quot;------------2、准备删除 /Users/lebbay/DerivedData&quot;</span><br><span class="line">for file in /Users/lebbay/DerivedData/*;do</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确定是目录</span></span><br><span class="line">if test -d $file;then</span><br><span class="line">echo &quot;删除---&gt;&quot;$file</span><br><span class="line">rm -rf $file</span><br><span class="line">fi</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">echo &quot;------------3、准备删除 ~/Library/Developer/Xcode/Archives&quot;</span><br><span class="line">for file in ~/Library/Developer/Xcode/Archives/*;do </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确定是目录</span> </span><br><span class="line">if test -d $file;then</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">不是今天的都删掉</span></span><br><span class="line">today=$(date &quot;+%Y-%m-%d&quot;)</span><br><span class="line">if [[ ! $file =~ $today ]];then</span><br><span class="line">echo &quot;删除---&gt;&quot;$file</span><br><span class="line">rm -rf $file</span><br><span class="line">fi</span><br><span class="line">fi</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;------------4、准备删除 /Users/lebbay/Archives&quot;</span><br><span class="line">for file in /Users/lebbay/Archives/*;do </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确定是目录</span></span><br><span class="line">if test -d $file;then</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">不是今天的都删掉</span></span><br><span class="line">today=$(date &quot;+%Y-%m-%d&quot;)</span><br><span class="line">if [[ ! $file =~ $today ]];then</span><br><span class="line">echo &quot;删除---&gt;&quot;$file</span><br><span class="line">rm -rf $file</span><br><span class="line">fi</span><br><span class="line">fi</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;------------5、准备删除 ~/Library/Developer/CoreSimulator/Devices，仅保留 SE 机型&quot;</span><br><span class="line"></span><br><span class="line">for file in ~/Library/Developer/CoreSimulator/Devices/*;do</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确定是目录</span></span><br><span class="line">if test -d $file;then</span><br><span class="line">device_plist=&quot;$&#123;file&#125;/device.plist&quot;</span><br><span class="line">device_plist_text=`cat $device_plist`</span><br><span class="line">se_line=&quot;&lt;string&gt;com.apple.CoreSimulator.SimDeviceType.iPhone-SE&quot;</span><br><span class="line">if [[ ! $device_plist_text =~ $se_line ]]; then</span><br><span class="line">echo &quot;删除---&gt;&quot;$file</span><br><span class="line">rm -rf $file</span><br><span class="line">else</span><br><span class="line">echo &quot;保留---&gt;&quot;$file</span><br><span class="line">fi</span><br><span class="line">fi</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;------------6、准备删除 ~/Library/Developer/Xcode/iOS\ DeviceSupport，保留自动化测试常用系统&quot;</span><br><span class="line">for file in ~/Library/Developer/Xcode/iOS\ DeviceSupport/*;do</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">手机系统升级之后就不好使喽。。。</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">iPhone 8 序列号：F4GX3EK1JC6F</span></span><br><span class="line">iphone_13_3_1=&quot;/13.3.1&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">iPhone X 序列号：G0NVPS22JCLF</span></span><br><span class="line">iphone_14_0_1=&quot;/14.0.1&quot;</span><br><span class="line">if [[ $file =~ $iphone_13_3_1 ]]; then</span><br><span class="line">echo &quot;保留---&gt;&quot;$file</span><br><span class="line">elif [[ $file =~ $iphone_14_0_1 ]]; then</span><br><span class="line">echo &quot;保留---&gt;&quot;$file</span><br><span class="line">else</span><br><span class="line">echo &quot;删除---&gt;&quot;$file</span><br><span class="line">rm -rf $file</span><br><span class="line">fi</span><br><span class="line">done</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">最后查询一下当前硬盘空间</span></span><br><span class="line">echo &quot;🌛 0、开始清理前硬盘空间&quot;</span><br><span class="line">df -lh</span><br></pre></td></tr></table></figure>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+              <a href="/tags/Mac/" rel="tag"># Mac</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/18/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -627,6 +292,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
