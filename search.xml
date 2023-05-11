@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Android之项目搭建</title>
+    <title>Android项目搭建</title>
     <url>/2022/09/30/Android%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA%E4%B8%8D%E5%AE%8C%E5%85%A8%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h2 id="版本汇总"><a href="#版本汇总" class="headerlink" title="版本汇总"></a>版本汇总</h2><p><img src="https://upload-images.jianshu.io/upload_images/708960-d0738f866e49003f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Android OS用户分布 2021-09-01.png"></p>
 <h2 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h2><p>通过模版创建<br><img src="https://upload-images.jianshu.io/upload_images/708960-3e137dc21eb10153.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="EmptyActivity模版.png"><br><strong>Name：</strong>项目名称；项目目录文件夹的名称，会默认展示在启动页，一般要求开头大写。<br><strong>Package name：</strong>唯一包名；在应用市场区分身份标识，用于更新覆盖等。<br><strong>Mininum SDK:</strong> 支持的最低Android OS版本；应用市场可通过此版本检查用户手机是否可以安装；但如果低于最低版本的用户通过直接安装apk或者aab文件的话，可能出现可以安装但无法打开的情况。<br><strong>Use legacy android.support libraries：</strong>如果您的应用需要旧版库支持，请选中复选框。</p>
@@ -15,9 +15,9 @@
 </ol>
 <p>通过点击IDE的▶️按钮开始运行即可。</p>
 ]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
+      <categories>
+        <category>Android</category>
+      </categories>
   </entry>
   <entry>
     <title>Python 环境配置记录</title>
